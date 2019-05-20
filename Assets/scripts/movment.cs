@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
-public class movment : MonoBehaviour
+public class Movment : MonoBehaviour
 {
     private Rigidbody2D m_Rigidbody2D;
     private Vector3 m_Velocity = Vector3.zero;
@@ -15,6 +15,8 @@ public class movment : MonoBehaviour
     [Range(0, 0.3f)] [SerializeField] private float m_MovementSmoothing = .05f;
 
     public String player = "1";
+
+    public PointCounter pointCounter;
 
     private DateTime explosionTime;
     private float fuse = 30;
@@ -51,9 +53,13 @@ public class movment : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        float speed = 3;
+        float speed = 10;
 
-        if(hasBomb)
+        float horizontal = Input.GetAxis("Horizontal" + player);
+        float vertical = Input.GetAxis("Vertical" + player);
+        float jump = Input.GetAxis("Jump" + player);
+
+        if (hasBomb)
         {
             SetColour();
 
@@ -65,7 +71,7 @@ public class movment : MonoBehaviour
 
        
 
-        if (Input.GetAxis("Jump" + player) >=0.5f)
+        if (jump >= 0.5f)
         {
             if (2 < (DateTime.Now - lastDesh).TotalSeconds)
             {
@@ -84,11 +90,11 @@ public class movment : MonoBehaviour
             speed = 0;
         }
 
-        Vector3 targetVelocityY = new Vector2(Input.GetAxis("Horizontal" + player) * speed, m_Rigidbody2D.velocity.y);
+        Vector3 targetVelocityY = new Vector2(horizontal * speed, m_Rigidbody2D.velocity.y);
 
         m_Rigidbody2D.velocity = Vector3.SmoothDamp(m_Rigidbody2D.velocity, targetVelocityY, ref m_Velocity, m_MovementSmoothing);
 
-        Vector4 targetVelocityX = new Vector4(m_Rigidbody2D.velocity.x, Input.GetAxis("Vertical" + player) * speed);
+        Vector4 targetVelocityX = new Vector4(m_Rigidbody2D.velocity.x, vertical * speed);
 
         m_Rigidbody2D.velocity = Vector3.SmoothDamp(m_Rigidbody2D.velocity, targetVelocityX, ref m_Velocity, m_MovementSmoothing);
         
@@ -97,7 +103,6 @@ public class movment : MonoBehaviour
     private void explode()
     {
         spawner.SetBomb();
-        Debug.Log("BOOOOOOOMMMM");
         spriteRenderer.color = new Color(1f, 1f, 1f);
         spawner.Explode(gameObject);
         hasBomb = false;
@@ -117,6 +122,7 @@ public class movment : MonoBehaviour
                 hasBomb = false;
                 spawner.SetBomb();
                 spawner.SetHole();
+                pointCounter.madePoint();
             }
         }
         else if(name == "bomb")

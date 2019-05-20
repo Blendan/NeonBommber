@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class BombTimer : MonoBehaviour
 {
-    public float fuse = 30f;
+    public float fuse = 7f;
     public Spawner spawner;
     public SpriteRenderer spriteRenderer;
     private DateTime explosionTime;

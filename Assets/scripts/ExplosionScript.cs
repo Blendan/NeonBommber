@@ -19,5 +19,6 @@ public class ExplosionScript : MonoBehaviour
         {
             Destroy(gameObject);
         }
+        transform.Rotate(Vector3.forward * -30);
     }
 }
