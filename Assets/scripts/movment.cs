@@ -9,10 +9,13 @@ public class Movment : MonoBehaviour
     private Vector3 m_Velocity = Vector3.zero;
     public Spawner spawner;
     public GameObject timer;
+    private static float movmentSpeed = 10;
+    private static float dashCoolDown = 1;
     private SpriteRenderer spriteRenderer;
     private DateTime lastDesh = DateTime.Now;
     private DateTime stunned = DateTime.Now;
-    [Range(0, 0.3f)] [SerializeField] private float m_MovementSmoothing = .05f;
+    private DateTime lastHit = DateTime.Now;
+    public float hitRecover = 0.5f; 
 
     public String player = "1";
 
@@ -24,6 +27,11 @@ public class Movment : MonoBehaviour
 
     private bool hasBomb = false;
 
+    public bool isInDash()
+    {
+        return (0.2 > (DateTime.Now - lastDesh).TotalSeconds);
+    }
+
     private void Awake()
     {
         m_Rigidbody2D = GetComponent<Rigidbody2D>();
@@ -31,11 +39,37 @@ public class Movment : MonoBehaviour
 
     private void SetColour()
     {
-        float delta = (float)(explosionTime - DateTime.Now).TotalSeconds;
-        float prozent = 1 - delta / (float)fuse;
+        float delta;
+        float prozent;
+        Color temp;
+        if (hasBomb)
+        {
+            delta = (float)(explosionTime - DateTime.Now).TotalSeconds;
+            prozent = 1 - delta / (float)fuse;
 
-        Color temp = new Color((float)prozent, (float)(1 - prozent), 0f);
-        spriteRenderer.color = temp;
+            temp = new Color((float)prozent, (float)(1 - prozent), 0f);
+            spriteRenderer.color = temp;
+        }
+
+        if (stunned > DateTime.Now)
+        {
+            prozent = 0.5f;
+        }
+        else
+        {
+            delta = (float)(DateTime.Now - lastDesh).TotalSeconds;
+            prozent = delta / (float)dashCoolDown + 0.3f;
+        }
+
+        if (player == "1")
+        {
+            temp = new Color(0, (float)prozent, 0f);
+        }
+        else
+        {
+            temp = new Color((float)prozent, 0f, (float)prozent);
+        }
+        gameObject.GetComponent<SpriteRenderer>().color = temp;
     }
 
     // Start is called before the first frame update
@@ -53,34 +87,35 @@ public class Movment : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        float speed = 10;
+        float speed = movmentSpeed;
+        float smoothing = 0f;
 
-        float horizontal = Input.GetAxis("Horizontal" + player);
-        float vertical = Input.GetAxis("Vertical" + player);
-        float jump = Input.GetAxis("Jump" + player);
+        float horizontal = getAxes("Horizontal");
+        float vertical = getAxes("Vertical");
+        float jump = getAxes("Jump");
 
-        if (hasBomb)
+        SetColour();
+
+        if(lastHit.AddSeconds(hitRecover) > DateTime.Now)
         {
-            SetColour();
-
-            if (explosionTime < DateTime.Now)
-            {
-                explode();
-            }
+            smoothing = 1f-((float)(DateTime.Now- lastHit).TotalSeconds / hitRecover )+0.3f;
         }
 
-       
+        if (explosionTime < DateTime.Now && hasBomb)
+        {
+            explode();
+        }
 
         if (jump >= 0.5f)
         {
-            if (2 < (DateTime.Now - lastDesh).TotalSeconds)
+            if (dashCoolDown < (DateTime.Now - lastDesh).TotalSeconds)
             {
                 speed = 50;
                 lastDesh = DateTime.Now;
             }
         }
 
-        if(0.2 > (DateTime.Now - lastDesh).TotalSeconds)
+        if(isInDash())
         {
             speed = 30;
         }
@@ -90,14 +125,23 @@ public class Movment : MonoBehaviour
             speed = 0;
         }
 
-        Vector3 targetVelocityY = new Vector2(horizontal * speed, m_Rigidbody2D.velocity.y);
 
-        m_Rigidbody2D.velocity = Vector3.SmoothDamp(m_Rigidbody2D.velocity, targetVelocityY, ref m_Velocity, m_MovementSmoothing);
+        Vector4 targetVelocity = new Vector4(horizontal * speed, vertical * speed);
 
-        Vector4 targetVelocityX = new Vector4(m_Rigidbody2D.velocity.x, vertical * speed);
-
-        m_Rigidbody2D.velocity = Vector3.SmoothDamp(m_Rigidbody2D.velocity, targetVelocityX, ref m_Velocity, m_MovementSmoothing);
+        m_Rigidbody2D.velocity = Vector3.SmoothDamp(m_Rigidbody2D.velocity, targetVelocity, ref m_Velocity, smoothing);
         
+    }
+
+    private float getAxes(String axes)
+    {
+        float returnValue = Input.GetAxis(axes + player);
+
+        if(returnValue == 0)
+        {
+            returnValue = Input.GetAxis("J"+axes + player);
+        }
+
+        return returnValue;
     }
 
     private void explode()
@@ -148,5 +192,10 @@ public class Movment : MonoBehaviour
         {
             Destroy(other.gameObject);
         }
+    }
+
+    public void Hit()
+    {
+        lastHit = DateTime.Now;
     }
 }
