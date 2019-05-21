@@ -283,10 +283,11 @@ GameObject:
   - component: {fileID: 162658606}
   - component: {fileID: 162658604}
   - component: {fileID: 162658605}
+  - component: {fileID: 162658611}
   - component: {fileID: 162658610}
   m_Layer: 0
   m_Name: Player2
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -441,6 +442,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   text: {fileID: 658446304}
   before: 'P2:'
+--- !u!114 &162658611
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 162658603}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b6a77625bad0aa349afbb1c72e1abccc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  funken: {fileID: 8614947753892344489, guid: 9799cd4aad3da5e408273b1edf9879d3, type: 3}
 --- !u!1 &186806987
 GameObject:
   m_ObjectHideFlags: 0
@@ -615,9 +629,10 @@ GameObject:
   - component: {fileID: 361455224}
   - component: {fileID: 361455223}
   - component: {fileID: 361455225}
+  - component: {fileID: 361455226}
   m_Layer: 0
   m_Name: Player1
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -772,6 +787,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   text: {fileID: 240219867}
   before: 'P1:'
+--- !u!114 &361455226
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 361455218}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b6a77625bad0aa349afbb1c72e1abccc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  funken: {fileID: 8614947753892344489, guid: 9799cd4aad3da5e408273b1edf9879d3, type: 3}
 --- !u!1 &614933177
 GameObject:
   m_ObjectHideFlags: 0
