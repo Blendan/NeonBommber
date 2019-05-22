@@ -9,13 +9,15 @@ public class Movment : MonoBehaviour
     private Vector3 m_Velocity = Vector3.zero;
     public Spawner spawner;
     public GameObject timer;
+    public int controlerNr = -1;
     private static float movmentSpeed = 10;
     private static float dashCoolDown = 1;
-    private SpriteRenderer spriteRenderer;
     private DateTime lastDesh = DateTime.Now;
     private DateTime stunned = DateTime.Now;
     private DateTime lastHit = DateTime.Now;
-    public float hitRecover = 0.5f; 
+    public float hitRecover = 0.5f;
+
+    public ColurControle colurControle;
 
     public String player = "1";
 
@@ -41,14 +43,13 @@ public class Movment : MonoBehaviour
     {
         float delta;
         float prozent;
-        Color temp;
+       
         if (hasBomb)
         {
             delta = (float)(explosionTime - DateTime.Now).TotalSeconds;
             prozent = 1 - delta / (float)fuse;
 
-            temp = new Color((float)prozent, (float)(1 - prozent), 0f);
-            spriteRenderer.color = temp;
+            colurControle.SetTimer(prozent);
         }
 
         if (stunned > DateTime.Now)
@@ -61,21 +62,12 @@ public class Movment : MonoBehaviour
             prozent = delta / (float)dashCoolDown + 0.3f;
         }
 
-        if (player == "1")
-        {
-            temp = new Color(0, (float)prozent, 0f);
-        }
-        else
-        {
-            temp = new Color((float)prozent, 0f, (float)prozent);
-        }
-        gameObject.GetComponent<SpriteRenderer>().color = temp;
+        colurControle.SetStrenght(prozent);
     }
 
     // Start is called before the first frame update
     void Start()
     {
-        spriteRenderer = timer.GetComponent<SpriteRenderer>();
 
         if(player=="1")
         {
@@ -134,11 +126,15 @@ public class Movment : MonoBehaviour
 
     private float getAxes(String axes)
     {
-        float returnValue = Input.GetAxis(axes + player);
-
-        if(returnValue == 0)
+        float returnValue = 0;
+        if (player == "2" || player == "1")
         {
-            returnValue = Input.GetAxis("J"+axes + player);
+            returnValue = Input.GetAxis(axes + player);
+        }
+
+        if(returnValue == 0 && controlerNr != -1)
+        {
+            returnValue = Input.GetAxis("J"+axes + controlerNr);
         }
 
         return returnValue;
@@ -147,7 +143,7 @@ public class Movment : MonoBehaviour
     private void explode()
     {
         spawner.SetBomb();
-        spriteRenderer.color = new Color(1f, 1f, 1f);
+        colurControle.SetTimerOff();
         spawner.Explode(gameObject);
         hasBomb = false;
     }
@@ -161,7 +157,7 @@ public class Movment : MonoBehaviour
         {
             if(hasBomb)
             {
-                spriteRenderer.color = new Color(1f, 1f, 1f);
+                colurControle.SetTimerOff();
                 destroy = true;
                 hasBomb = false;
                 spawner.SetBomb();
@@ -173,7 +169,7 @@ public class Movment : MonoBehaviour
         {
             if (!hasBomb)
             {
-                spriteRenderer.color = new Color(1f, 0f, 0f);
+                colurControle.SetTimer(1f);
                 hasBomb = true;
                 destroy = true;
 

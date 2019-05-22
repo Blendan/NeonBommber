@@ -376,6 +376,7 @@ GameObject:
   - component: {fileID: 162658605}
   - component: {fileID: 162658611}
   - component: {fileID: 162658610}
+  - component: {fileID: 162658612}
   m_Layer: 0
   m_Name: Player2
   m_TagString: Player
@@ -452,7 +453,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spawner: {fileID: 162658604}
   timer: {fileID: 1134561435}
+  controlerNr: 1
   hitRecover: 0.5
+  colurControle: {fileID: 162658612}
   player: 2
   pointCounter: {fileID: 162658610}
 --- !u!212 &162658608
@@ -548,6 +551,24 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   funken: {fileID: 8614947753892344489, guid: 9799cd4aad3da5e408273b1edf9879d3, type: 3}
   movment: {fileID: 162658607}
+--- !u!114 &162658612
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 162658603}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 124a697baa6924d44a2b297a42314184, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  self: {fileID: 162658608}
+  glow: {fileID: 1607532533}
+  timer: {fileID: 1134561435}
+  r: 1
+  g: 0
+  b: 1
 --- !u!1 &186806987
 GameObject:
   m_ObjectHideFlags: 0
@@ -723,6 +744,7 @@ GameObject:
   - component: {fileID: 361455223}
   - component: {fileID: 361455225}
   - component: {fileID: 361455226}
+  - component: {fileID: 361455227}
   m_Layer: 0
   m_Name: Player1
   m_TagString: Player
@@ -809,7 +831,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spawner: {fileID: 361455224}
   timer: {fileID: 186806987}
+  controlerNr: 2
   hitRecover: 0.5
+  colurControle: {fileID: 361455227}
   player: 1
   pointCounter: {fileID: 361455225}
 --- !u!50 &361455222
@@ -895,6 +919,24 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   funken: {fileID: 8614947753892344489, guid: 9799cd4aad3da5e408273b1edf9879d3, type: 3}
   movment: {fileID: 361455221}
+--- !u!114 &361455227
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 361455218}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 124a697baa6924d44a2b297a42314184, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  self: {fileID: 361455219}
+  glow: {fileID: 736711414}
+  timer: {fileID: 186806987}
+  r: 0
+  g: 1
+  b: 0
 --- !u!1 &614933177
 GameObject:
   m_ObjectHideFlags: 0
