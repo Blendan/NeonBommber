@@ -12,9 +12,9 @@ public class Movment : MonoBehaviour
     public int controlerNr = -1;
     private static float movmentSpeed = 10;
     private static float dashCoolDown = 1;
-    private DateTime lastDesh = DateTime.Now;
-    private DateTime stunned = DateTime.Now;
-    private DateTime lastHit = DateTime.Now;
+    private float lastDesh = 0f;
+    private float stunned = 0f;
+    private float lastHit = 0f;
     public float hitRecover = 0.5f;
 
     public ColurControle colurControle;
@@ -23,15 +23,14 @@ public class Movment : MonoBehaviour
 
     public PointCounter pointCounter;
 
-    private DateTime explosionTime;
+    private float explosionTime;
     private float fuse = 30;
-
 
     private bool hasBomb = false;
 
     public bool isInDash()
     {
-        return (0.2 > (DateTime.Now - lastDesh).TotalSeconds);
+        return (0.2 > (dashCoolDown - lastDesh));
     }
 
     private void Awake()
@@ -46,19 +45,18 @@ public class Movment : MonoBehaviour
        
         if (hasBomb)
         {
-            delta = (float)(explosionTime - DateTime.Now).TotalSeconds;
-            prozent = 1 - delta / (float)fuse;
+            prozent = 1 - explosionTime / (float)fuse;
 
             colurControle.SetTimer(prozent);
         }
 
-        if (stunned > DateTime.Now)
+        if (stunned > 0)
         {
             prozent = 0.5f;
         }
         else
         {
-            delta = (float)(DateTime.Now - lastDesh).TotalSeconds;
+            delta = (float)(dashCoolDown - lastDesh);
             prozent = delta / (float)dashCoolDown + 0.3f;
         }
 
@@ -88,22 +86,31 @@ public class Movment : MonoBehaviour
 
         SetColour();
 
-        if(lastHit.AddSeconds(hitRecover) > DateTime.Now)
+        lastHit -= Time.deltaTime;
+        stunned -= Time.deltaTime;
+        lastDesh -= Time.deltaTime;
+
+        if (lastHit < 0)
         {
-            smoothing = 1f-((float)(DateTime.Now- lastHit).TotalSeconds / hitRecover )+0.3f;
+            smoothing = 1f-((float)(hitRecover- lastHit) / hitRecover )+0.3f;
         }
 
-        if (explosionTime < DateTime.Now && hasBomb)
+
+        if(hasBomb)
         {
-            explode();
+            explosionTime -= Time.deltaTime;
+            if (explosionTime <= 0)
+            {
+                explode();
+            }
         }
 
         if (jump >= 0.5f)
         {
-            if (dashCoolDown < (DateTime.Now - lastDesh).TotalSeconds)
+            if (dashCoolDown > lastDesh)
             {
                 speed = 50;
-                lastDesh = DateTime.Now;
+                lastDesh = dashCoolDown;
             }
         }
 
@@ -112,7 +119,7 @@ public class Movment : MonoBehaviour
             speed = 30;
         }
 
-        if(stunned>DateTime.Now)
+        if(stunned>0)
         {
             speed = 0;
         }
@@ -176,12 +183,12 @@ public class Movment : MonoBehaviour
                 BombTimer bombTimer = (BombTimer) other.gameObject.GetComponent("BombTimer");
 
                 fuse = bombTimer.fuse;
-                explosionTime = bombTimer.ExplosionTime;
+                explosionTime = bombTimer.TimeNow;
             }
         }
         else if(name == "Explosion")
         {
-            stunned = DateTime.Now.AddSeconds(5);
+            stunned = 5f;
         }
 
         if (destroy)
@@ -192,6 +199,6 @@ public class Movment : MonoBehaviour
 
     public void Hit()
     {
-        lastHit = DateTime.Now;
+        lastHit = hitRecover;
     }
 }

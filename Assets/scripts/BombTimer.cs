@@ -8,20 +8,25 @@ public class BombTimer : MonoBehaviour
     public float fuse = 7f;
     public Spawner spawner;
     public SpriteRenderer spriteRenderer;
-    private DateTime explosionTime;
+    private float timeNow;
 
-    public DateTime ExplosionTime { get => explosionTime; set => explosionTime = value; }
+    public float TimeNow { get => timeNow; set => timeNow = value; }
 
     // Start is called before the first frame update
     void Start()
     {
-        ExplosionTime = DateTime.Now.AddSeconds(fuse);
+        TimeNow = fuse;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (ExplosionTime < DateTime.Now)
+        /* if (ExplosionTime < DateTime.Now)
+         {
+             explode();
+         }*/
+        TimeNow -= Time.deltaTime;
+        if (TimeNow<=0)
         {
             explode();
         }
@@ -38,8 +43,7 @@ public class BombTimer : MonoBehaviour
 
     private void SetColour()
     {
-        float delta = (float)(ExplosionTime - DateTime.Now).TotalSeconds;
-        float prozent = 1 - delta / (float)fuse;
+        float prozent = 1 - TimeNow / (float)fuse;
 
         Color temp =  new Color((float)prozent, (float)(1 - prozent), 0f);
         spriteRenderer.color = temp;
