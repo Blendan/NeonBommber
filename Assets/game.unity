@@ -1250,6 +1250,7 @@ GameObject:
   - component: {fileID: 690341906}
   - component: {fileID: 690341905}
   - component: {fileID: 690341908}
+  - component: {fileID: 690341909}
   m_Layer: 0
   m_Name: EventSystem
   m_TagString: Untagged
@@ -1319,6 +1320,24 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   btnUnfreze: {fileID: 271220983}
   btnEnd: {fileID: 1932716923}
+--- !u!114 &690341909
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 690341904}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 95b3edb30e3a2594aafb0586c6c99e33, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  objects:
+  - {fileID: 4754748380867236405, guid: 52004fdbb0cf2f948b32ffe936c23939, type: 3}
+  - {fileID: 894831265590196474, guid: a71298c1be3292849a1f025167709ab6, type: 3}
+  spawnRate: 2
+  minX: 20
+  minY: 12
 --- !u!1 &736711414
 GameObject:
   m_ObjectHideFlags: 0
@@ -1698,7 +1717,7 @@ TilemapRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: acc430b87f8dd464f812a9f1d21e860e, type: 2}
+  - {fileID: 2100000, guid: c3abb2156252c0845a708a257ab69f2a, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

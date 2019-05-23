@@ -28,9 +28,9 @@ public class Movment : MonoBehaviour
 
     private bool hasBomb = false;
 
-    public bool isInDash()
+    public bool IsInDash()
     {
-        return (0.2 > (dashCoolDown - lastDesh));
+        return (dashCoolDown-0.3 <= lastDesh);
     }
 
     private void Awake()
@@ -90,7 +90,7 @@ public class Movment : MonoBehaviour
         stunned -= Time.deltaTime;
         lastDesh -= Time.deltaTime;
 
-        if (lastHit < 0)
+        if (lastHit > 0)
         {
             smoothing = 1f-((float)(hitRecover- lastHit) / hitRecover )+0.3f;
         }
@@ -114,7 +114,7 @@ public class Movment : MonoBehaviour
             }
         }
 
-        if(isInDash())
+        if(IsInDash())
         {
             speed = 30;
         }
@@ -205,7 +205,7 @@ public class Movment : MonoBehaviour
         }
         else if(name == "Explosion")
         {
-            stunned = 5f;
+            stunned = 2.5f;
         }
 
         if (destroy)
