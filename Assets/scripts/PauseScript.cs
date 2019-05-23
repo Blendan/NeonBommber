@@ -24,7 +24,7 @@ public class PauseScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape))
+        if (Input.GetKeyDown(KeyCode.Escape)||Input.GetKeyDown("joystick button 7"))
         {
             if (Time.timeScale == 1)
             {
@@ -38,6 +38,18 @@ public class PauseScript : MonoBehaviour
                 Debug.Log("unpaused");
                 Time.timeScale = 1;
                 hidePaused();
+            }
+        }
+
+        if (Time.timeScale == 0)
+        {
+            if(Input.GetKeyDown("joystick button 0"))
+            {
+                Unfreze();
+            }
+            else if(Input.GetKeyDown("joystick button 1"))
+            {
+                EndGame();
             }
         }
     }

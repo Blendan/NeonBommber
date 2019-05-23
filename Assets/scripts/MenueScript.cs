@@ -29,6 +29,13 @@ public class MenueScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if (Input.GetKeyDown("joystick button 0"))
+        {
+            StartGame();
+        }
+        else if (Input.GetKeyDown("joystick button 1"))
+        {
+            EndGame();
+        }
     }
 }

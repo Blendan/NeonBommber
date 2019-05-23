@@ -101,13 +101,13 @@ public class Movment : MonoBehaviour
             explosionTime -= Time.deltaTime;
             if (explosionTime <= 0)
             {
-                explode();
+                Explode();
             }
         }
 
         if (jump >= 0.5f)
         {
-            if (dashCoolDown > lastDesh)
+            if (lastDesh<=0)
             {
                 speed = 50;
                 lastDesh = dashCoolDown;
@@ -141,13 +141,30 @@ public class Movment : MonoBehaviour
 
         if(returnValue == 0 && controlerNr != -1)
         {
-            returnValue = Input.GetAxis("J"+axes + controlerNr);
+            switch (axes)
+            {
+                case "Jump":
+                    returnValue = Math.Max(GetJoystickKey(0), Input.GetAxis("J" + axes + controlerNr));
+                    break;
+                default:
+                    returnValue = Input.GetAxis("J" + axes + controlerNr);
+                    break;
+            }
         }
 
         return returnValue;
     }
 
-    private void explode()
+    private float GetJoystickKey(int nr)
+    {
+        if (Input.GetKeyDown("joystick "+ controlerNr + " button "+nr))
+        {
+            return 1f;
+        }
+        return 0f;
+    }
+
+    private void Explode()
     {
         spawner.SetBomb();
         colurControle.SetTimerOff();
