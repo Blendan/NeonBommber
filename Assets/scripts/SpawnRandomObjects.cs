@@ -29,7 +29,7 @@ public class SpawnRandomObjects : MonoBehaviour
 
                 float x = minX, y = minY;
 
-                if((int)Random.Range(1,3)==2)
+                if((int)Random.Range(1f,2f)==2)
                 {
                     x *= -1;
                 }
@@ -57,22 +57,22 @@ public class SpawnRandomObjects : MonoBehaviour
                 {
                     if (y < 0)
                     {
-                        movment.y = Random.Range(1, 3);
+                        movment.y = Random.Range(2, 10);
                     }
                     else
                     {
-                        movment.y = Random.Range(1, 3)*-1f;
+                        movment.y = Random.Range(2, 10) *-1f;
                     }
                 }
                 else
                 {
                     if (x < 0)
                     {
-                        movment.x = Random.Range(1, 3);
+                        movment.x = Random.Range(5, 15);
                     }
                     else
                     {
-                        movment.x = Random.Range(1, 3) * -1f;
+                        movment.x = Random.Range(5, 15) * -1f;
                     }
                 }
 

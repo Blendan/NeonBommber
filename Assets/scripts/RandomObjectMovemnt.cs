@@ -31,7 +31,6 @@ public class RandomObjectMovemnt : MonoBehaviour
         if(Math.Abs(transform.position.x)>maxX|| Math.Abs(transform.position.y) > maxY)
         {
             Destroy(gameObject);
-            Debug.Log("dib");
         }
     }
 }
