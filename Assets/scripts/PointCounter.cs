@@ -24,4 +24,9 @@ public class PointCounter : MonoBehaviour
         count++;
         text.text = before + count;
     }
+
+    public int GetPoints()
+    {
+        return count;
+    }
 }
