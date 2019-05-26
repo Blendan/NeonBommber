@@ -6,6 +6,11 @@ TagManager:
   tags:
   - PauseMenue
   - WinnMenue
+  - Bot
+  - Hole
+  - Bomb
+  - Border
+  - Explosion
   layers:
   - Default
   - TransparentFX

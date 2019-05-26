@@ -28,7 +28,14 @@ public class GameScript : MonoBehaviour
 
         foreach(Player value in inputManeger.GetPlayer())
         {
-            SpawnPlayer(value,0f,0f);
+            if (value.IsBot)
+            {
+                SpawnBot(value, 0f, 1f);
+            }
+            else
+            {
+                SpawnPlayer(value, 0f, 0f);
+            }
         }
     }
 
@@ -41,6 +48,19 @@ public class GameScript : MonoBehaviour
         temp.gameObject.GetComponent<Movment>().controlerNr = playerData.ControllerNr;
 
         temp.gameObject.GetComponent<PointCounter>().text = pointDisplays[playerData.PlayerNr-1];
+
+        players.Add(temp);
+    }
+
+    private void SpawnBot(Player playerData, float x, float y)
+    {
+        GameObject temp = Instantiate(bot, new Vector3(x, y), new Quaternion(0, 0, 0, 0)) as GameObject;
+
+        temp.gameObject.GetComponent<ColurControle>().SetColur(playerData.R, playerData.G, playerData.B);
+        temp.gameObject.GetComponent<BotMovment>().player = playerData.PlayerNr + "";
+
+        Debug.Log(playerData.PlayerNr - 1);
+        temp.gameObject.GetComponent<PointCounter>().text = pointDisplays[playerData.PlayerNr - 1];
 
         players.Add(temp);
     }

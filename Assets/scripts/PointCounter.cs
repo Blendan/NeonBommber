@@ -9,16 +9,6 @@ public class PointCounter : MonoBehaviour
     public Text text;
     public string before = "P?:";
 
-    void Start()
-    {
-
-    }
-
-    void Update()
-    {
-
-    }
-
     public void madePoint()
     {
         count++;

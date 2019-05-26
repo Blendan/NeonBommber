@@ -29,6 +29,7 @@ public class InputManeger : MonoBehaviour
         {
             IsBot = true
         };
+        temp.PlayerNr = playerNr;
 
         temp.SetColur(r, g, b);
 

@@ -10,8 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 3178644862353260239}
   - component: {fileID: 603397092167849024}
-  - component: {fileID: 1402904633564959538}
   - component: {fileID: 2619511072839878318}
+  - component: {fileID: 5686153234851278512}
   - component: {fileID: 8506163895142711566}
   - component: {fileID: 5578659009868544122}
   - component: {fileID: 6317034349380616911}
@@ -19,7 +19,7 @@ GameObject:
   - component: {fileID: 2199523661067005368}
   m_Layer: 0
   m_Name: Bot
-  m_TagString: Player
+  m_TagString: Bot
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -88,25 +88,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &1402904633564959538
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2982461040881590972}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0369bf6fa39b77f489ac5b2573386a90, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  spawner: {fileID: 8506163895142711566}
-  timer: {fileID: 5985871045661149870}
-  controlerNr: -1
-  hitRecover: 0.5
-  colurControle: {fileID: 2199523661067005368}
-  player: 0
-  pointCounter: {fileID: 6317034349380616911}
 --- !u!50 &2619511072839878318
 Rigidbody2D:
   serializedVersion: 4
@@ -128,6 +109,25 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 1
   m_Constraints: 4
+--- !u!114 &5686153234851278512
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2982461040881590972}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dbc9086c575711f4a9db70012c1678a6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxDistance: 2
+  spawner: {fileID: 8506163895142711566}
+  timer: {fileID: 5985871045661149870}
+  hitRecover: 0.5
+  colurControle: {fileID: 2199523661067005368}
+  player: 1
+  pointCounter: {fileID: 6317034349380616911}
 --- !u!114 &8506163895142711566
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -189,7 +189,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   funken: {fileID: 8614947753892344489, guid: 9799cd4aad3da5e408273b1edf9879d3, type: 3}
-  movment: {fileID: 1402904633564959538}
+  movment: {fileID: 0}
 --- !u!114 &2199523661067005368
 MonoBehaviour:
   m_ObjectHideFlags: 0
