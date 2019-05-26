@@ -6,7 +6,12 @@ using UnityEngine.UI;
 
 public class GameScript : MonoBehaviour
 {
-    public GameObject[] players;
+    public GameObject player, bot;
+    public InputManeger inputManeger;
+
+    public Text[] pointDisplays;
+
+    private List<GameObject> players = new List<GameObject>();
 
     private GameObject[] menue;
 
@@ -20,6 +25,24 @@ public class GameScript : MonoBehaviour
         menue = GameObject.FindGameObjectsWithTag("WinnMenue");
 
         Hide();
+
+        foreach(Player value in inputManeger.GetPlayer())
+        {
+            SpawnPlayer(value,0f,0f);
+        }
+    }
+
+    private void SpawnPlayer(Player playerData, float x ,float y)
+    {
+        GameObject temp = Instantiate(player, new Vector3(x, y), new Quaternion(0, 0, 0, 0)) as GameObject;
+
+        temp.gameObject.GetComponent<ColurControle>().SetColur(playerData.R, playerData.G, playerData.B);
+        temp.gameObject.GetComponent<Movment>().player = playerData.PlayerNr + "";
+        temp.gameObject.GetComponent<Movment>().controlerNr = playerData.ControllerNr;
+
+        temp.gameObject.GetComponent<PointCounter>().text = pointDisplays[playerData.PlayerNr-1];
+
+        players.Add(temp);
     }
 
     private void Hide()

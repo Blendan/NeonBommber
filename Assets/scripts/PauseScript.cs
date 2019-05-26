@@ -22,8 +22,6 @@ public class PauseScript : MonoBehaviour
         btnUnfreze.onClick.AddListener(Unfreze);
         btnRestart.onClick.AddListener(RestartGame);
 
-        Debug.Log(pauseObjects.Length);
-
         hidePaused();
     }
 

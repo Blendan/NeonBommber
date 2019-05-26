@@ -5743,8 +5743,8 @@ Tilemap:
       m_ColliderType: 1
   - first: {x: 8, y: -5, z: 0}
     second:
-      m_TileIndex: 6
-      m_TileSpriteIndex: 6
+      m_TileIndex: 0
+      m_TileSpriteIndex: 0
       m_TileMatrixIndex: 0
       m_TileColorIndex: 0
       m_ObjectToInstantiate: {fileID: 0}
@@ -14887,7 +14887,7 @@ Tilemap:
       m_ColliderType: 1
   m_AnimatedTiles: {}
   m_TileAssetArray:
-  - m_RefCount: 1549
+  - m_RefCount: 1550
     m_Data: {fileID: 11400000, guid: f361c97c29119694aba20f46299c7545, type: 2}
   - m_RefCount: 0
     m_Data: {fileID: 0}
@@ -14899,10 +14899,10 @@ Tilemap:
     m_Data: {fileID: 0}
   - m_RefCount: 0
     m_Data: {fileID: 0}
-  - m_RefCount: 1
-    m_Data: {fileID: 11400000, guid: 43a95d85e02ed30469f92f8ccf8e6d05, type: 2}
+  - m_RefCount: 0
+    m_Data: {fileID: 0}
   m_TileSpriteArray:
-  - m_RefCount: 1549
+  - m_RefCount: 1550
     m_Data: {fileID: 21300000, guid: 6c3b0481e93fe2e4594cab5ce67f63f8, type: 3}
   - m_RefCount: 0
     m_Data: {fileID: 0}
@@ -14914,8 +14914,8 @@ Tilemap:
     m_Data: {fileID: 0}
   - m_RefCount: 0
     m_Data: {fileID: 0}
-  - m_RefCount: 1
-    m_Data: {fileID: 21300000, guid: 8c9f39b54b6881d448ce50c9e6d6bc20, type: 3}
+  - m_RefCount: 0
+    m_Data: {fileID: 0}
   m_TileMatrixArray:
   - m_RefCount: 1550
     m_Data:
@@ -14973,6 +14973,7 @@ GameObject:
   - component: {fileID: 2040185197}
   - component: {fileID: 2040185196}
   - component: {fileID: 2040185199}
+  - component: {fileID: 2040185200}
   m_Layer: 0
   m_Name: EventSystem
   m_TagString: Untagged
@@ -15042,3 +15043,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   btnStart: {fileID: 599577727}
   btnEnd: {fileID: 303999576}
+--- !u!114 &2040185200
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2040185195}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 736504382a8b9e04dadb00e2a65fc54e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
