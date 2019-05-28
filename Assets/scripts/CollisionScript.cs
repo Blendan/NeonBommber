@@ -14,11 +14,14 @@ public class CollisionScript : MonoBehaviour
             Vector3 vector = gameObject.transform.position;
             GameObject temp = Instantiate(funken, vector, new Quaternion(0, 0, 0, 0)) as GameObject;
 
-            if (((Movment)collision.gameObject.GetComponent("Movment")).IsInDash())
+            if (collision.gameObject.GetComponent<Movment>() != null && movment != null)
             {
-                if (!movment.IsInDash())
+                if (collision.gameObject.GetComponent<Movment>().IsInDash())
                 {
-                    movment.Hit();
+                    if (!movment.IsInDash())
+                    {
+                        movment.Hit();
+                    }
                 }
             }
         }

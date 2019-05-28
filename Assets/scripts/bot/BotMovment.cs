@@ -25,10 +25,18 @@ public class BotMovment : MonoBehaviour
     private float fuse = 30;
     private bool hasBomb = false;
 
+    private Vector3 target;
+    private float lastTargeting = 0;
+
     private List<DirectonLooker> directonLookers = new List<DirectonLooker>();
+    private Rigidbody2D m_Rigidbody2D;
+    private Vector3 m_Velocity = Vector3.zero;
+
     // Start is called before the first frame update
     void Start()
     {
+        m_Rigidbody2D = GetComponent<Rigidbody2D>();
+
         spawner.SetBomb();
 
         Physics2D.queriesStartInColliders = false;
@@ -51,6 +59,7 @@ public class BotMovment : MonoBehaviour
         lastHit -= Time.deltaTime;
         stunned -= Time.deltaTime;
         lastDesh -= Time.deltaTime;
+        lastTargeting -= Time.deltaTime;
 
         if (hasBomb)
         {
@@ -63,57 +72,75 @@ public class BotMovment : MonoBehaviour
 
         if (stunned <= 0)
         {
-            float moveToY = 0f, moveToX = 0f;
-            bool allSave = true;
-
-            foreach(DirectonLooker directonLooker in directonLookers)
+            if (lastHit <= 0)
             {
-                float dicance = directonLooker.getDistance(maxDistance, transform);
+                float moveToY = 0f, moveToX = 0f;
+                bool allSave = true;
 
-                if(dicance != -1)
+                foreach (DirectonLooker directonLooker in directonLookers)
                 {
-                    moveToX -= directonLooker.MoveX;
-                    moveToY -= directonLooker.MoveX;
-                    allSave = false;
-                }
-                else
-                {
-                    moveToX += directonLooker.MoveX;
-                    moveToY += directonLooker.MoveX;
-                }
-            }
+                    float dicance = directonLooker.getDistance(maxDistance, transform);
 
-            if(allSave)
-            {
-                Debug.Log("Save");
-                Transform other = null;
-                if (hasBomb)
-                {
-                    other = GameObject.FindGameObjectsWithTag("Hole")[0].transform;
-                }
-                else
-                {
-                    float closets = 100;
-                    GameObject[] bombs = GameObject.FindGameObjectsWithTag("Bomb");
-
-                    foreach(GameObject bomb in bombs)
+                    if (dicance != -1)
                     {
-                        if(closets> Vector3.Distance(bomb.transform.position, transform.position))
-                        {
-                            closets = Vector3.Distance(bomb.transform.position, transform.position);
-                            other = bomb.transform;
-                        }
+                        moveToX -= directonLooker.MoveX;
+                        moveToY -= directonLooker.MoveX;
+                        allSave = false;
+                    }
+                    else
+                    {
+                        moveToX += directonLooker.MoveX;
+                        moveToY += directonLooker.MoveX;
                     }
                 }
-                if (other != null)
-                {
-                    transform.position = Vector3.MoveTowards(transform.position, other.position, movmentSpeed * Time.deltaTime);
-                }
 
+                if (allSave)
+                {
+                    Transform other = null;
+                    if (hasBomb)
+                    {
+                        other = GameObject.FindGameObjectsWithTag("Hole")[0].transform;
+                    }
+                    else
+                    {
+                        float closets = 100;
+                        GameObject[] bombs = GameObject.FindGameObjectsWithTag("Bomb");
+
+                        foreach (GameObject bomb in bombs)
+                        {
+                            if (closets > Vector3.Distance(bomb.transform.position, transform.position))
+                            {
+                                closets = Vector3.Distance(bomb.transform.position, transform.position);
+                                other = bomb.transform;
+                            }
+                        }
+                    }
+
+                    if (other != null && lastTargeting <= 0)
+                    {
+                        lastTargeting = 1f;
+
+                        target = other.position;
+                    }
+                }
+                else
+                {
+                    target = new Vector3(moveToX, moveToY) + transform.position;
+                }
             }
-            else
+
+            if (target != null)
             {
-                transform.position = Vector3.MoveTowards(transform.position, new Vector3(moveToX, moveToY) + transform.position, movmentSpeed * Time.deltaTime);
+                if (lastHit <= 0)
+                {
+                    m_Rigidbody2D.MovePosition(Vector3.MoveTowards(transform.position, target, movmentSpeed * Time.deltaTime));
+                }
+                else
+                {
+                    Vector3 moveDirection = Vector3.MoveTowards(transform.position, target, movmentSpeed * Time.deltaTime) - transform.position;
+
+                    m_Rigidbody2D.velocity = Vector3.SmoothDamp(m_Rigidbody2D.velocity, moveDirection, ref m_Velocity, 1f);
+                }
             }
 
         }
@@ -158,23 +185,23 @@ public class BotMovment : MonoBehaviour
         return (dashCoolDown - 0.3 <= lastDesh);
     }
 
-    internal void Hit()
+    public void Hit()
     {
-        throw new NotImplementedException();
+        lastHit = hitRecover;
     }
 
     void OnTriggerEnter2D(Collider2D other)
     {
         String name = other.tag;
-        bool destroy = false;
 
         if (name == "Hole")
         {
             if (hasBomb)
             {
                 colurControle.SetTimerOff();
-                destroy = true;
                 hasBomb = false;
+                Destroy(other.gameObject);
+
                 spawner.SetBomb();
                 spawner.SetHole();
                 pointCounter.madePoint();
@@ -186,7 +213,8 @@ public class BotMovment : MonoBehaviour
             {
                 colurControle.SetTimer(1f);
                 hasBomb = true;
-                destroy = true;
+
+                Destroy(other.gameObject);
 
                 BombTimer bombTimer = (BombTimer)other.gameObject.GetComponent("BombTimer");
 
@@ -197,11 +225,6 @@ public class BotMovment : MonoBehaviour
         else if (name == "Explosion")
         {
             stunned = 2.5f;
-        }
-
-        if (destroy)
-        {
-            Destroy(other.gameObject);
         }
     }
 }
@@ -221,9 +244,9 @@ class DirectonLooker
 
     public float getDistance(float maxDistance, Transform transform)
     {
-        RaycastHit2D hit = Physics2D.Raycast(transform.position, new Vector2(moveX,moveY), maxDistance);
+        RaycastHit2D hit = Physics2D.Raycast(transform.position, new Vector2(moveX, moveY), maxDistance);
 
-        if (hit.collider != null && hit.collider.tag != "Bomb" && hit.collider.tag != "Hole" && hit.collider.tag != "Border")
+        if (hit.collider != null && hit.collider.tag != "Bomb" && hit.collider.tag != "Hole" && hit.collider.tag != "Border" && hit.collider.tag != "Player")
         {
             return Vector3.Distance(hit.transform.position, transform.position);
         }

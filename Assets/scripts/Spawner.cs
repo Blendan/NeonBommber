@@ -17,10 +17,13 @@ public class Spawner : MonoBehaviour
 
     public void SetHole()
     {
-        GameObject temp;
-        float x = Random.Range(width / 2 * -1, width / 2);
-        float y = Random.Range(height / 2 * -1, height / 2);
-        temp = Instantiate(hole, new Vector3(x, y), new Quaternion(0, 0, 0, 0)) as GameObject;
+        if (GameObject.FindGameObjectsWithTag("Hole").Length == 1 || GameObject.FindGameObjectsWithTag("Hole").Length == 0)
+        {
+            GameObject temp;
+            float x = Random.Range(width / 2 * -1, width / 2);
+            float y = Random.Range(height / 2 * -1, height / 2);
+            temp = Instantiate(hole, new Vector3(x, y), new Quaternion(0, 0, 0, 0)) as GameObject;
+        }
     }
 
     public void Explode(GameObject gameObject)

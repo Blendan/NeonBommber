@@ -175,14 +175,14 @@ public class Movment : MonoBehaviour
     void OnTriggerEnter2D(Collider2D other)
     {
         String name = other.name.Replace("(Clone)","");
-        bool destroy = false;
 
         if (name == "Hole")
         {
             if(hasBomb)
             {
                 colurControle.SetTimerOff();
-                destroy = true;
+                Destroy(other.gameObject);
+
                 hasBomb = false;
                 spawner.SetBomb();
                 spawner.SetHole();
@@ -195,7 +195,7 @@ public class Movment : MonoBehaviour
             {
                 colurControle.SetTimer(1f);
                 hasBomb = true;
-                destroy = true;
+                Destroy(other.gameObject);
 
                 BombTimer bombTimer = (BombTimer) other.gameObject.GetComponent("BombTimer");
 
@@ -206,11 +206,6 @@ public class Movment : MonoBehaviour
         else if(name == "Explosion")
         {
             stunned = 2.5f;
-        }
-
-        if (destroy)
-        {
-            Destroy(other.gameObject);
         }
     }
 

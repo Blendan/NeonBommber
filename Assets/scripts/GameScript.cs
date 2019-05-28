@@ -134,9 +134,17 @@ public class GameScript : MonoBehaviour
 
             Debug.Log(points);
 
-            if(points > maxPoints)
+            if (points > maxPoints)
             {
-                player = value.GetComponent<Movment>().player;
+                Movment movment = value.GetComponent<Movment>();
+                if (movment == null)
+                {
+                    player = value.GetComponent<BotMovment>().player;
+                }
+                else
+                { 
+                    player = movment.player;
+                }
                 maxPoints = points;
                 draw = false;
             }
