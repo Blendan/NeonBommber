@@ -16,12 +16,8 @@ public class MenueScript : MonoBehaviour
     }
 
     private void StartGame()
-    {
-        gameObject.GetComponent<InputManeger>().AddPlayer(0f, 1f, 1f, 1,1);
-        //gameObject.GetComponent<InputManeger>().AddPlayer(1f, 0f, 1f, 2,1);
-        gameObject.GetComponent<InputManeger>().AddBot(1f, 0f, 1f, 2);
-
-        SceneManager.LoadScene("game");
+    { 
+        SceneManager.LoadScene("control");
     }
 
     private void EndGame()

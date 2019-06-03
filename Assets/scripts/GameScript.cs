@@ -26,7 +26,9 @@ public class GameScript : MonoBehaviour
 
         Hide();
 
-        foreach(Player value in inputManeger.GetPlayer())
+        Debug.Log("Anz: "+inputManeger.GetPlayer().Count);
+
+        foreach (Player value in inputManeger.GetPlayer())
         {
             if (value.IsBot)
             {
@@ -46,6 +48,8 @@ public class GameScript : MonoBehaviour
         temp.gameObject.GetComponent<ColurControle>().SetColur(playerData.R, playerData.G, playerData.B);
         temp.gameObject.GetComponent<Movment>().player = playerData.PlayerNr + "";
         temp.gameObject.GetComponent<Movment>().controlerNr = playerData.ControllerNr;
+
+        Debug.Log("p:"+playerData.PlayerNr);
 
         temp.gameObject.GetComponent<PointCounter>().text = pointDisplays[playerData.PlayerNr-1];
 

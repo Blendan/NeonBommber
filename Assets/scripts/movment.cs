@@ -139,7 +139,7 @@ public class Movment : MonoBehaviour
             returnValue = Input.GetAxis(axes + player);
         }
 
-        if(returnValue == 0 && controlerNr != -1)
+        if(returnValue == 0 && controlerNr != 0)
         {
             switch (axes)
             {

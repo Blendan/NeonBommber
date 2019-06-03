@@ -21,6 +21,8 @@ public class InputManeger : MonoBehaviour
         temp.SetColur(r, g, b);
 
         players.Add(temp);
+
+        Debug.Log(playerNr);
     }
 
     public void AddBot(float r, float g, float b, int playerNr)
