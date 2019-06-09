@@ -46,8 +46,8 @@ public class GameScript : MonoBehaviour
         GameObject temp = Instantiate(player, new Vector3(x, y), new Quaternion(0, 0, 0, 0)) as GameObject;
 
         temp.gameObject.GetComponent<ColurControle>().SetColur(playerData.R, playerData.G, playerData.B);
-        temp.gameObject.GetComponent<Movment>().player = playerData.PlayerNr + "";
-        temp.gameObject.GetComponent<Movment>().controlerNr = playerData.ControllerNr;
+        temp.gameObject.GetComponent<PlayerMovment>().player = playerData.PlayerNr + "";
+        temp.gameObject.GetComponent<PlayerMovment>().controlerNr = playerData.ControllerNr;
 
         Debug.Log("p:"+playerData.PlayerNr);
 
@@ -140,7 +140,7 @@ public class GameScript : MonoBehaviour
 
             if (points > maxPoints)
             {
-                Movment movment = value.GetComponent<Movment>();
+                PlayerMovment movment = value.GetComponent<PlayerMovment>();
                 if (movment == null)
                 {
                     player = value.GetComponent<BotMovment>().player;

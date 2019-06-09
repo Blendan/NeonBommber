@@ -104,9 +104,9 @@ MonoBehaviour:
   timer: {fileID: 3562512923264185971}
   controlerNr: -1
   hitRecover: 0.5
-  colurControle: {fileID: 3562512921739458256}
-  player: 0
-  pointCounter: {fileID: 3562512921739458258}
+  colurControle: {fileID: 0}
+  player: 1
+  pointCounter: {fileID: 0}
 --- !u!50 &3562512921739458255
 Rigidbody2D:
   serializedVersion: 4

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
-public class Movment : MonoBehaviour
+public class PlayerMovment : MonoBehaviour
 {
     private Rigidbody2D m_Rigidbody2D;
     private Vector3 m_Velocity = Vector3.zero;
@@ -17,11 +17,11 @@ public class Movment : MonoBehaviour
     private float lastHit = 0f;
     public float hitRecover = 0.5f;
 
-    public ColurControle colurControle;
+    private ColurControle colurControle;
 
     public String player = "1";
 
-    public PointCounter pointCounter;
+    private PointCounter pointCounter;
 
     private float explosionTime;
     private float fuse = 30;
@@ -36,6 +36,8 @@ public class Movment : MonoBehaviour
     private void Awake()
     {
         m_Rigidbody2D = GetComponent<Rigidbody2D>();
+        colurControle = GetComponent<ColurControle>();
+        pointCounter = GetComponent<PointCounter>();
     }
 
     private void SetColour()

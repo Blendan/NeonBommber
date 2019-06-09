@@ -14,7 +14,7 @@ public class BotCollision : MonoBehaviour
             Vector3 vector = gameObject.transform.position;
             GameObject temp = Instantiate(funken, vector, new Quaternion(0, 0, 0, 0)) as GameObject;
 
-            if (((Movment)collision.gameObject.GetComponent("Movment")).IsInDash())
+            if ((collision.gameObject.GetComponent<PlayerMovment>()).IsInDash())
             {
                 if (!movment.IsInDash())
                 {
